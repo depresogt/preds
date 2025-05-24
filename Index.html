@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VR Prediction Slider</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <h1>VR Settings</h1>
+
+    <label for="predictionSlider" class="slider">
+      Prediction: <span id="predictionValue">50</span>
+    </label>
+    <input type="range" id="predictionSlider" min="0" max="100" value="50" />
+
+    <br /><br />
+
+    <button id="hzButton">Change Refresh Rate</button>
+  </main>
+
+  <script>
+    const slider = document.getElementById("predictionSlider");
+    const valueDisplay = document.getElementById("predictionValue");
+    const hzButton = document.getElementById("hzButton");
+
+    let currentHz = 72; // Start at 72Hz
+
+    slider.addEventListener("input", () => {
+      valueDisplay.textContent = slider.value;
+      console.log("Prediction set to:", slider.value);
+    });
+
+    hzButton.addEventListener("click", () => {
+      if (navigator.xr && navigator.xr.requestSession) {
+        const nextHz = currentHz === 72 ? 90 : currentHz === 90 ? 120 : 72;
+        currentHz = nextHz;
+        console.log("Requesting refresh rate:", nextHz);
+
+        // Pseudo logic — actual Hz change is limited in WebXR
+        hzButton.textContent = `Current Refresh Rate: ${nextHz}Hz`;
+      } else {
+        alert("WebXR not supported in this bro
