@@ -1,55 +1,49 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    
-<meta name="descrition" content="my homemade spotify">
-<meta name="keywords" content="spotify">
-<meta name="auther" content="depreso">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="Stylesheet" href="style.css">
-
-<table style="background-color: hsl(180, 100%, 50%);">
-<table>
-<head>
-
-<label class="slider">
-  <input type="range" class="level" min="0" max="1" step="0.01" value="0.5">
-</label>
-<p1> thanks for using my website to play music flower clown<p1>
-<body style="background-color: rgb(44, 43, 43);">
-<h1 style="color: rgb(78, 81, 255);">my home made spotify<h1>
-  <button class="button" onclick="yourtolate()">Nope your too late i already died</button>
-  <audio id="audioPlayer" src="yourtolate.mp3"></audio>
-  <script src="yourtolatejs.js"></script>
-
-
-
-<button class="button1" onclick="myTwentyFirstReason()">My Twenty First Reason</button>
-<audio id="audioPlayer1" src="-my-twenty-first-reason.mp3.mp3"></audio>
-<script src="my21reasons.js"></script>
-
-
-<button class="button" onclick="lookingoutforuuuu()">i should stop looking out for you</button>
-<audio id="audioPlayer2" src="looking-out-for-u.mp3"></audio>
-<script src="lookingoutforu111.js"></script>
-
-<button class="button3" onclick="DarkThoughts()">Dark Thoughts</button>
-<audio id="audioPlayer3" src="Dark Thoughts.mp3"></audio>
-<script src="DarkThoughtsjs.js"></script>
-
-<script>
-  const volumeSlider = document.querySelector('.level');
-
-  volumeSlider.addEventListener('input', () => {
-    const allAudio = document.querySelectorAll('audio');
-    allAudio.forEach(audio => {
-      audio.volume = volumeSlider.value;
-    });
-  });
-</script>
-
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VR Prediction Slider</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
 <body>
+  <main>
+    <h1>VR Settings</h1>
 
+    <label for="predictionSlider" class="slider">
+      Prediction: <span id="predictionValue">50</span>
+    </label>
+    <input type="range" id="predictionSlider" min="0" max="100" value="50" />
+
+    <br /><br />
+
+    <button id="hzButton">Change Refresh Rate</button>
+  </main>
+
+  <script>
+    const slider = document.getElementById("predictionSlider");
+    const valueDisplay = document.getElementById("predictionValue");
+    const hzButton = document.getElementById("hzButton");
+
+    let currentHz = 72; // Start at 72Hz
+
+    slider.addEventListener("input", () => {
+      valueDisplay.textContent = slider.value;
+      console.log("Prediction set to:", slider.value);
+    });
+
+    hzButton.addEventListener("click", () => {
+      if (navigator.xr && navigator.xr.requestSession) {
+        const nextHz = currentHz === 72 ? 90 : currentHz === 90 ? 120 : 72;
+        currentHz = nextHz;
+        console.log("Requesting refresh rate:", nextHz);
+
+        // Pseudo logic — actual Hz change is limited in WebXR
+        hzButton.textContent = `Current Refresh Rate: ${nextHz}Hz`;
+      } else {
+        alert("WebXR not supported in this browser.");
+      }
+    });
+  </script>
+</body>
 </html>
