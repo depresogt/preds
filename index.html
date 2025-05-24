@@ -3,25 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WebXR VR UI</title>
+  <title>Quest Hz Setter</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <main>
-    <h1>VR Control Panel</h1>
+    <h1>Quest Refresh Rate Setter</h1>
 
-    <label class="slider">
-      Prediction: <span id="predictionValue">50</span>
-    </label>
-    <input type="range" id="predictionSlider" min="0" max="100" value="50" />
+    <select id="hzSelect">
+      <option value="45">45 Hz</option>
+      <option value="60">60 Hz</option>
+      <option value="72">72 Hz</option>
+      <option value="90">90 Hz</option>
+      <option value="120">120 Hz</option>
+    </select>
 
     <br /><br />
 
-    <button id="hzButton">Change Refresh Rate</button>
-    <br /><br />
-    <button id="enterVR">Enter VR</button>
+    <button id="setHzBtn">Set Refresh Rate</button>
+
+    <p id="status">Status: Waiting</p>
   </main>
 
-  <script src="script.js" type="module"></script>
+  <script>
+    document.getElementById("setHzBtn").addEventListener("click", async () => {
+      const hz = document.getElementById("hzSelect").value;
+      const response = await fetch(`/set-hz?rate=${hz}`);
+      const result = await response.text();
+      document.getElementById("status").textContent = "Status: " + result;
+    });
+  </script>
 </body>
 </html>
+https://www.youtube.com/watch?v=W6NZfCO5SIk&pp=0gcJCY0JAYcqIYzv
